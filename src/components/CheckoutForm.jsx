@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { submitOrder } from '../services/api';
 import { Loader2 } from 'lucide-react';
 
 export default function CheckoutForm() {
+    const navigate = useNavigate();
     const { cart, cartTotal, clearCart } = useCart();
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(null); // 'success' | 'error' | null
@@ -40,6 +42,16 @@ export default function CheckoutForm() {
         setFinalTotal(cartTotal + fee);
     }, [shippingMethod, cartTotal]);
 
+    // 當訂單狀態改變時，滾動到頂部
+    useEffect(() => {
+        if (status === 'success' || status === 'error') {
+            // 使用 setTimeout 確保 DOM 已更新
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+    }, [status]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (cart.length === 0) return;
@@ -74,12 +86,8 @@ export default function CheckoutForm() {
             clearCart();
             e.target.reset();
             setShippingMethod('');
-            // 滾動到頂部以顯示成功訊息
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
             setStatus('error');
-            // 滾動到頂部以顯示錯誤訊息
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
@@ -134,7 +142,7 @@ export default function CheckoutForm() {
                         {/* 繼續購物按鈕 */}
                         <div className="bg-gray-50 border-t border-green-200 p-4 text-center">
                             <button
-                                onClick={() => setStatus(null)}
+                                onClick={() => navigate('/')}
                                 className="text-gray-700 hover:text-gray-900 font-medium underline underline-offset-4"
                             >
                                 ← 繼續購物
