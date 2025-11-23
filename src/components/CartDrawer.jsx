@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, Minus, Plus, Trash2 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { cn } from '../lib/utils';
 
 export default function CartDrawer() {
+    const navigate = useNavigate();
     const {
         cart,
         isCartOpen,
@@ -25,10 +27,7 @@ export default function CartDrawer() {
 
     const handleCheckout = () => {
         setIsCartOpen(false);
-        const checkoutSection = document.getElementById('checkout');
-        if (checkoutSection) {
-            checkoutSection.scrollIntoView({ behavior: 'smooth' });
-        }
+        navigate('/checkout');
     };
 
     return (
@@ -115,14 +114,17 @@ export default function CartDrawer() {
                             <span>Total</span>
                             <span>${cartTotal.toLocaleString()}</span>
                         </div>
-                        <p className="text-xs text-gray-500 text-center">
-                            Shipping and taxes calculated at checkout.
+
+                        {/* 購物車說明文字 */}
+                        <p className="text-sm text-gray-600 text-center px-2">
+                            確認品項與數量後，按『我要下單』填寫收件資訊給小編
                         </p>
+
                         <button
                             onClick={handleCheckout}
                             className="w-full bg-black text-white py-3 rounded-md font-bold uppercase hover:bg-gray-800 transition-colors"
                         >
-                            Proceed to Checkout
+                            我要下單 ➜
                         </button>
                     </div>
                 )}

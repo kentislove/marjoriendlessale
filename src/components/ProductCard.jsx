@@ -89,14 +89,18 @@ export default function ProductCard({ product }) {
                 addToCart({
                     ...product,
                     id: variant.id,
-                    selectedSize,
-                    selectedColor,
-                    variantId: variant.id
+                    size: selectedSize,
+                    color: selectedColor,
+                    variantId: variant.id,
+                    availableStock: stockInfo.stock // 傳遞可用庫存
                 });
             }
         } else {
             // 沒有變體，直接加入購物車
-            addToCart(product);
+            addToCart({
+                ...product,
+                availableStock: product.quantity || 0 // 傳遞可用庫存
+            });
         }
     };
 

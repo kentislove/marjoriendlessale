@@ -48,7 +48,7 @@ export default function SalePage() {
                         Sale
                     </h1>
                     <p className="text-center text-gray-600 max-w-2xl mx-auto">
-                        已售完商品專區
+                        Maison Mori官網已完售商品專區
                     </p>
                 </div>
             </section>
@@ -58,7 +58,7 @@ export default function SalePage() {
                 <div className="container mx-auto px-4">
                     {/* 商品數量顯示 */}
                     <p className="text-center text-sm text-gray-500 mb-6">
-                        顯示 {products.length} 個已售完商品
+                        顯示 {products.length} 個Maison Mori官網已完售商品
                     </p>
 
                     {/* 商品網格 */}
@@ -69,7 +69,7 @@ export default function SalePage() {
                             ))
                         ) : (
                             <div className="col-span-full text-center py-12 text-gray-500">
-                                目前沒有已售完的商品
+                                目前沒有Maison Mori官網已完售的商品
                             </div>
                         )}
                     </div>

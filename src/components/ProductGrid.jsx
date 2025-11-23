@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import { fetchProducts } from '../services/api';
 
@@ -7,6 +8,7 @@ export default function ProductGrid({ filterCategories = null }) {
     const [loading, setLoading] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState('全部');
     const [categories, setCategories] = useState(['全部']);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         async function loadProducts() {
@@ -46,9 +48,55 @@ export default function ProductGrid({ filterCategories = null }) {
     }, [filterCategories]);
 
     // 根據選擇的分類篩選商品
-    const filteredProducts = selectedCategory === '全部'
+    let filteredProducts = selectedCategory === '全部'
         ? products
         : products.filter(p => p.category === selectedCategory);
+
+    // 檢查是否有 highlight 參數，如果有則將該商品置頂
+    const highlightId = searchParams.get('highlight');
+
+    useEffect(() => {
+        if (highlightId) {
+            console.log('🔍 檢測到 highlight 參數:', highlightId);
+            console.log('📦 當前商品列表:', filteredProducts.map(p => ({ id: p.id, name: p.name })));
+
+            const highlightedIndex = filteredProducts.findIndex(p => p.id === highlightId);
+            console.log('📍 找到商品索引:', highlightedIndex);
+
+            if (highlightedIndex !== -1) {
+                console.log('✅ 找到商品，準備置頂');
+                // 滾動到頁面頂部
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                console.log('❌ 未找到匹配的商品');
+            }
+
+            // 清除 URL 參數
+            const timer = setTimeout(() => {
+                console.log('🧹 清除 URL 參數');
+                setSearchParams({});
+            }, 2000); // 延長到 2 秒，確保商品已載入
+
+            return () => clearTimeout(timer);
+        }
+    }, [highlightId, filteredProducts.length, setSearchParams]);
+
+    // 執行置頂排序
+    if (highlightId) {
+        const highlightedIndex = filteredProducts.findIndex(p => p.id === highlightId);
+        if (highlightedIndex > 0) {
+            // 將高亮商品移到第一位
+            const highlightedProduct = filteredProducts[highlightedIndex];
+            filteredProducts = [
+                highlightedProduct,
+                ...filteredProducts.slice(0, highlightedIndex),
+                ...filteredProducts.slice(highlightedIndex + 1)
+            ];
+            console.log('🎯 商品已置頂:', highlightedProduct.name);
+        } else if (highlightedIndex === 0) {
+            console.log('✨ 商品已在第一位');
+        }
+    }
 
     if (loading) {
         return (

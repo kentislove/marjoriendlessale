@@ -1,51 +1,98 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
     return (
-        <footer className="border-t bg-gray-50 py-12">
-            <div className="container mx-auto px-4">
+        <footer className="bg-gray-900 text-gray-300">
+            <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    {/* Brand */}
                     <div>
-                        <h3 className="text-lg font-bold uppercase mb-4">Marjorie</h3>
-                        <p className="text-sm text-gray-500">
-                            Fashion for the modern muse. Timeless pieces designed to elevate your everyday style.
+                        <h3 className="text-white text-xl font-bold mb-4">MARJORIE</h3>
+                        <p className="text-sm text-gray-400">
+                            精選時尚服飾，為您打造獨特風格
                         </p>
                     </div>
+
+                    {/* Shop */}
                     <div>
-                        <h4 className="font-medium mb-4">Shop</h4>
-                        <ul className="space-y-2 text-sm text-gray-500">
-                            <li><a href="#" className="hover:text-black">New Arrivals</a></li>
-                            <li><a href="#" className="hover:text-black">Clothing</a></li>
-                            <li><a href="#" className="hover:text-black">Accessories</a></li>
+                        <h4 className="text-white font-semibold mb-4">購物</h4>
+                        <ul className="space-y-2 text-sm">
+                            <li>
+                                <Link to="/" className="hover:text-white transition-colors">
+                                    New Arrivals
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/clothing" className="hover:text-white transition-colors">
+                                    Clothing
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/dress" className="hover:text-white transition-colors">
+                                    Dress
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/sale" className="hover:text-white transition-colors">
+                                    Sale
+                                </Link>
+                            </li>
                         </ul>
                     </div>
+
+                    {/* Customer Service */}
                     <div>
-                        <h4 className="font-medium mb-4">Support</h4>
-                        <ul className="space-y-2 text-sm text-gray-500">
-                            <li><a href="#" className="hover:text-black">Contact Us</a></li>
-                            <li><a href="#" className="hover:text-black">Shipping & Returns</a></li>
-                            <li><a href="#" className="hover:text-black">FAQ</a></li>
+                        <h4 className="text-white font-semibold mb-4">客戶服務</h4>
+                        <ul className="space-y-2 text-sm">
+                            <li>
+                                <Link to="/shipping-returns" className="hover:text-white transition-colors">
+                                    配送與退換貨
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/contact" className="hover:text-white transition-colors">
+                                    聯絡我們
+                                </Link>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://lin.ee/E6oixVD"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-white transition-colors"
+                                >
+                                    LINE@客服
+                                </a>
+                            </li>
                         </ul>
                     </div>
+
+                    {/* Contact */}
                     <div>
-                        <h4 className="font-medium mb-4">Newsletter</h4>
-                        <p className="text-sm text-gray-500 mb-4">Subscribe to receive updates, access to exclusive deals, and more.</p>
-                        <div className="flex gap-2">
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                            />
-                            <button className="bg-black text-white px-4 py-2 text-sm font-medium rounded-md hover:bg-gray-800">
-                                Subscribe
-                            </button>
-                        </div>
+                        <h4 className="text-white font-semibold mb-4">聯繫方式</h4>
+                        <ul className="space-y-2 text-sm">
+                            <li>
+                                <a
+                                    href="mailto:sales@kentware.com"
+                                    className="hover:text-white transition-colors"
+                                >
+                                    sales@kentware.com
+                                </a>
+                            </li>
+                            <li className="text-gray-400">
+                                週一至週日 10:00 - 22:00
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div className="mt-12 border-t pt-8 text-center text-sm text-gray-500">
-                    &copy; {new Date().getFullYear()} Marjorie Sales. All rights reserved.
+
+                {/* Bottom Bar */}
+                <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                    <p>&copy; {new Date().getFullYear()} Marjorie Sales. All rights reserved.</p>
                 </div>
             </div>
         </footer>
     );
 }
+

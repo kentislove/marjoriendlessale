@@ -29,11 +29,20 @@ export const CartProvider = ({ children }) => {
         setCart((prev) => {
             const existing = prev.find((item) => item.id === product.id);
             if (existing) {
+                // 檢查是否超過庫存
+                const availableStock = existing.availableStock || existing.quantity || 0;
+                const newQuantity = Math.min(existing.quantity + 1, availableStock);
+
                 return prev.map((item) =>
-                    item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+                    item.id === product.id ? { ...item, quantity: newQuantity } : item
                 );
             }
-            return [...prev, { ...product, quantity: 1 }];
+            // 新增商品時，儲存可用庫存資訊
+            return [...prev, {
+                ...product,
+                quantity: 1,
+                availableStock: product.availableStock || product.quantity || 0
+            }];
         });
         setIsCartOpen(true);
     };
@@ -47,11 +56,22 @@ export const CartProvider = ({ children }) => {
             removeFromCart(productId);
             return;
         }
-        setCart((prev) =>
-            prev.map((item) =>
-                item.id === productId ? { ...item, quantity } : item
-            )
-        );
+
+        // 檢查庫存限制
+        setCart((prev) => {
+            const item = prev.find(i => i.id === productId);
+            if (!item) return prev;
+
+            // 取得商品的可用庫存
+            const availableStock = item.availableStock || item.quantity || 0;
+
+            // 如果新數量超過庫存，限制為最大庫存
+            const finalQuantity = Math.min(quantity, availableStock);
+
+            return prev.map((cartItem) =>
+                cartItem.id === productId ? { ...cartItem, quantity: finalQuantity } : cartItem
+            );
+        });
     };
 
     const clearCart = () => {
