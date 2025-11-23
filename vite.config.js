@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/marjoriendlessale/', // GitHub Pages repository 名稱
+  base: '/', // 根路徑，用於 kentislove.github.io
 })
