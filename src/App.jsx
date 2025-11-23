@@ -13,7 +13,7 @@ import { CartProvider } from './context/CartContext';
 function App() {
   return (
     <CartProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/marjoriendlessale">
         <Layout>
           <Routes>
             <Route path="/" element={<HomePage />} />
