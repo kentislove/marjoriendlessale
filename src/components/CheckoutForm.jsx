@@ -74,8 +74,12 @@ export default function CheckoutForm() {
             clearCart();
             e.target.reset();
             setShippingMethod('');
+            // 滾動到頂部以顯示成功訊息
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
             setStatus('error');
+            // 滾動到頂部以顯示錯誤訊息
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
